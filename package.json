@@ -35,8 +35,5 @@
       "git rm --cached"
     ]
   },
-  "dependencies": {
-    "babel-plugin-styled-components": "^1.5.1",
-    "styled-components": "^3.3.3"
-  }
+  "dependencies": {}
 }
