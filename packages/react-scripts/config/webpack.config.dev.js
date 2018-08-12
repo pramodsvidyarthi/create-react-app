@@ -188,7 +188,7 @@ module.exports = {
               getStyleLoaderConfig(),
               getCssLoaderConfig({
                 modules: true,
-                localIdentName: 'blahblah__[name]__[local]__[hash:base64:5]',
+                localIdentName: '[name]__[local]__[hash:base64:5]',
               }), // overriding the css loader config options to support css modules
               getPostCssLoaderConfig(),
             ],
