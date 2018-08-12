@@ -28,7 +28,6 @@ const getPostCssLoaderConfig = () => ({
 const getCssLoaderConfig = (opts = {}) => ({
   loader: require.resolve('css-loader'),
   options: Object.assign(
-    {},
     {
       importLoaders: 1,
     },
