@@ -8,7 +8,6 @@
 // @remove-on-eject-end
 'use strict';
 
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -20,6 +19,11 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const {
+  getStyleLoaderConfig,
+  getPostCssLoaderConfig,
+  getCssLoaderConfig,
+} = require('./shared.config');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -188,42 +192,20 @@ module.exports = {
               Object.assign(
                 {
                   fallback: {
-                    loader: require.resolve('style-loader'),
+                    loader: getStyleLoaderConfig(),
                     options: {
                       hmr: false,
                     },
                   },
                   use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                        modules: true,
-                        localIdentName: '[name]__[local]__[hash:base64:5]',
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
-                    },
+                    getCssLoaderConfig({
+                      minimize: true,
+                      sourceMap: shouldUseSourceMap,
+                      modules: true,
+                      localIdentName:
+                        'blahblah__[name]__[local]__[hash:base64:5]',
+                    }),
+                    getPostCssLoaderConfig(),
                   ],
                 },
                 extractTextPluginOptions
@@ -249,40 +231,17 @@ module.exports = {
               Object.assign(
                 {
                   fallback: {
-                    loader: require.resolve('style-loader'),
+                    loader: getStyleLoaderConfig(),
                     options: {
                       hmr: false,
                     },
                   },
                   use: [
-                    {
-                      loader: require.resolve('css-loader'),
-                      options: {
-                        importLoaders: 1,
-                        minimize: true,
-                        sourceMap: shouldUseSourceMap,
-                      },
-                    },
-                    {
-                      loader: require.resolve('postcss-loader'),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
-                      },
-                    },
+                    getCssLoaderConfig({
+                      minimize: true,
+                      sourceMap: shouldUseSourceMap,
+                    }),
+                    getPostCssLoaderConfig(),
                   ],
                 },
                 extractTextPluginOptions
